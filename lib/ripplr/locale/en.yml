@@ -1,0 +1,3 @@
+en:
+  ripplr:
+    key_not_specified: "Cannot index an object that does not specify a key."

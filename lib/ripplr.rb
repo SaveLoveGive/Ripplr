@@ -1,3 +1,6 @@
 require 'ripplr/queryable'
 require 'ripplr/indexers'
 require 'ripplr/formatters'
+require 'yaml'
+require 'ripplr/translation'
+require 'ripplr/errors'

@@ -1,1 +1,1 @@
-  require File.join("ripplr", "formatters", "json")
+  require File.join("ripplr", "formatters", "riak")
