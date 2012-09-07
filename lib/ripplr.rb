@@ -1,4 +1,5 @@
 require 'ripplr/queryable'
+require 'ripplr/query_field'
 require 'ripplr/indexers'
 require 'ripplr/formatters'
 require 'yaml'

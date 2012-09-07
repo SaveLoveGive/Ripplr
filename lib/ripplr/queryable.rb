@@ -4,33 +4,52 @@ module Ripplr
       indexer.index(self)
     end
 
-    def remove_index
+    def remove_index(indexer=Ripple.client)
     end
 
     def bucket_name
+      self.class.bucket.name
     end
 
     def indexes_as
-      Hash.new
+      index_data = { :id => self.key }
 
-      # index_data = { :id => queryable_obj.key }
-
-      # queryable_obj.class.query_fields.each do |field|
-      #   index_data.merge field.indexes_as(queryable_obj)
-      # end
+      self.class.query_fields.each do |field|
+        index_data.merge! field.indexes_as(self)
+      end
+      index_data
     end
 
     class << self
       def included(base)
         base.module_eval do
           extend ActsAsMethods
+
+
         end
       end
     end
 
     module ActsAsMethods
-      def queryable(&block)
+      def query_fields
+        @query_fields ||= Array.new
+        @query_fields
+      end
 
+      def queryable(&block)
+        block.call
+      end
+
+      def time(*names)
+        names.each do |name|
+          query_fields << Ripplr::QueryField.new(:dt, name)
+        end
+      end
+
+      def text(*names)
+        names.each do |name|
+          query_fields << Ripplr::QueryField.new(:text, name)
+        end
       end
     end
   end
