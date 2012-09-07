@@ -27,7 +27,7 @@ describe Ripplr::Queryable do
       Given { lawnmower.stub(:key).and_return "ABCDEF012345" }
       When (:result) { lawnmower.indexes_as }
       Then { result.should == {
-          :id => "ABCDEF012345",
+          :key => "ABCDEF012345",
           :title_text => "Lawnmower",
           :description_text => "It’s a variation of the classic dumbbell row so it trains the muscles of your back."
         }
@@ -41,7 +41,7 @@ describe Ripplr::Queryable do
       Given { entry.stub(:key).and_return "XYZ1020" }
       When (:result) { entry.indexes_as }
       Then { result.should == {
-          :id => "XYZ1020",
+          :key => "XYZ1020",
           :description_text => "4x8 BB Power Clean @ 135lbs.",
           :created_at_dt => time
         }

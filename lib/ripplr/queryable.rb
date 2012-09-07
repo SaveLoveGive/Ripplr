@@ -12,7 +12,7 @@ module Ripplr
     end
 
     def indexes_as
-      index_data = { :id => self.key }
+      index_data = { :key => self.key }
 
       self.class.query_fields.each do |field|
         index_data.merge! field.indexes_as(self)
@@ -23,14 +23,12 @@ module Ripplr
     class << self
       def included(base)
         base.module_eval do
-          extend ActsAsMethods
-
-
+          extend QueryableClassMethods
         end
       end
     end
 
-    module ActsAsMethods
+    module QueryableClassMethods
       def query_fields
         @query_fields ||= Array.new
         @query_fields
