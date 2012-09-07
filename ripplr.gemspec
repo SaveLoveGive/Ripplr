@@ -12,13 +12,9 @@ Gem::Specification.new do |gem|
   gem.authors = ["Matt Snyder"]
 
   # Deps
-  gem.add_development_dependency "rspec", "~>2.11.0"
-  gem.add_development_dependency 'rake'
-  gem.add_dependency "riak-client", "~> 1.0.0"
-  gem.add_dependency "ripple"
-#  gem.add_dependency "activesupport", [">= 3.0.0", "< 3.3.0"]
-#  gem.add_dependency "activemodel", [">= 3.0.0", "< 3.3.0"]
-  gem.add_dependency "tzinfo"
+  gem.add_development_dependency "rspec-given", ">= 1.6.0"
+  gem.add_development_dependency "rake"
+  gem.add_dependency "ripple", ">= 0.9.5"
 
   # Files
   ignores = File.read(".gitignore").split(/\r?\n/).reject{ |f| f =~ /^(#.+|\s*)$/ }.map {|f| Dir[f] }.flatten
