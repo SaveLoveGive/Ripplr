@@ -15,10 +15,17 @@ describe Ripplr::Queryable do
     Then { Person.new.bucket_name.should == "people" }
   end
 
-  describe "#indexing" do
-    Given (:friend) { Person.new }
-    Given (:service) { mock :index => true }
-    Then { friend.index(service).should be_true }
+  describe "#index" do
+    context "overide indexer" do
+      Given (:friend) { Person.new }
+      Given (:service) { mock :index => true }
+      Then { friend.index(service).should be_true }
+    end
+    context "default indexer" do
+      Given (:rg3) { Person.new }
+      Given { Ripplr::Indexers::Ripple.should_receive(:index).with(rg3).and_return true }
+      Then { rg3.index.should be_true }
+    end
   end
 
   describe "#indexes_as" do

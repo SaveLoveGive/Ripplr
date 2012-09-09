@@ -1,7 +1,7 @@
 module Ripplr
   module Queryable
-    def index(indexer=Ripple.client)
-      indexer.index(self)
+    def index(indexer=Ripplr::Indexers::Ripple)
+      indexer.index self
     end
 
     def remove_index(indexer=Ripple.client)
