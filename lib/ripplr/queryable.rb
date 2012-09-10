@@ -33,6 +33,10 @@ module Ripplr
         indices.search self, "#{queryable_field(property)}: \"#{query}\""
       end
 
+      def count
+        self.bucket.list.size
+      end
+
       def query_fields
         @query_fields ||= Array.new
         @query_fields

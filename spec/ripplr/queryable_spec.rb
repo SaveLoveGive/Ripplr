@@ -15,6 +15,11 @@ describe Ripplr::Queryable do
     Then { Person.new.bucket_name.should == "people" }
   end
 
+  describe "self#count" do
+    Given { Person.bucket.stub(:list).and_return [1,2,3,4,5] }
+    Then { Person.count.should == 5 }
+  end
+
   describe "#search" do
     context "when using a field that has been defiend as queryable" do
       Given (:indexer) { mock }
