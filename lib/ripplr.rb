@@ -1,5 +1,6 @@
 require 'yaml'
 require 'ripplr/queryable'
+require 'ripplr/null_object'
 require 'ripplr/query_field'
 require 'ripplr/indexers'
 require 'ripplr/criteria'

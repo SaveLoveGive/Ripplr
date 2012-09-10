@@ -12,7 +12,17 @@ module Ripplr
     end
 
     def order_by(field)
-      @order = { :sort => @target.queryable_field(field).to_s }
+      @order_by_field = @target.queryable_field(field)
+      self
+    end
+
+    def ascending
+      @order_by_direction = " asc"
+      self
+    end
+
+    def descending
+      @order_by_direction = " desc"
       self
     end
 
@@ -35,11 +45,7 @@ module Ripplr
     def execute
       return @target.list if condition.nil?
 
-      if @order.present?
-        @indexer.search @target, query, @order
-      else
-        @indexer.search @target, query
-      end
+      @indexer.search @target, query, options
     end
 
     def conditions
@@ -50,6 +56,17 @@ module Ripplr
     def results
       @results ||= execute
       @results
+    end
+
+    def options
+      Maybe(ordering) { Hash.new }
+    end
+
+    def ordering
+      return NullObject.new if @order_by_field.nil?
+      sort = { :sort => "#{@order_by_field.to_s}" }
+      sort[:sort] += @order_by_direction unless @order_by_direction.nil?
+      sort
     end
 
     def condition

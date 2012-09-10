@@ -10,14 +10,14 @@ describe Ripplr::Criteria do
 
   describe "searching with a query against a field" do
     Given (:indexer) { mock }
-    Given { indexer.should_receive(:search).with(Person,"first_name_text: \"skrillex\"").and_return ["Awesome"] }
+    Given { indexer.should_receive(:search).with(Person,"first_name_text: \"skrillex\"", {}).and_return ["Awesome"] }
     When (:results) { Ripplr::Criteria.new(Person, indexer).where(:first_name => "skrillex").execute }
     Then { results.should == ["Awesome"] }
   end
 
   describe "searching with a query against a different field" do
     Given (:indexer) { mock }
-    Given { indexer.should_receive(:search).with(Person,"last_name_text: \"Auerbach\"").and_return ["Dan"] }
+    Given { indexer.should_receive(:search).with(Person,"last_name_text: \"Auerbach\"", {}).and_return ["Dan"] }
     When (:results) { Ripplr::Criteria.new(Person, indexer).where(:last_name => "Auerbach").execute }
     Then { results.should == ["Dan"] }
   end
@@ -29,7 +29,7 @@ describe Ripplr::Criteria do
   describe "treating a criteria object like a collection executes the query" do
     Given (:criteria) {  Ripplr::Criteria.new(Person, indexer).where(:first_name => "Dan") }
     Given (:indexer) { mock }
-    Given { indexer.should_receive(:search).with(Person,"first_name_text: \"Dan\"").once.and_return(["Dan"]) }
+    Given { indexer.should_receive(:search).with(Person,"first_name_text: \"Dan\"", {}).once.and_return(["Dan"]) }
 
     context "by calling #each" do
       Given (:iterated) { Array.new }
@@ -77,6 +77,24 @@ describe Ripplr::Criteria do
 
     context "when sorting by a non queryable field" do
       Then { expect { criteria.order_by(:junk_field) }.to raise_error RuntimeError }
+    end
+
+    context "when sorting in descending order" do
+      Given { indexer.should_receive(:search).with(Person, "first_name_text: \"Patrick\"", :sort => "created_at_dt desc").and_return [3,2,1] }
+      When(:result) { criteria.order_by(:created_at).descending }
+      Then { criteria.execute.should == [3,2,1] }
+    end
+
+     context "when sorting in ascending order (force default)" do
+      Given { indexer.should_receive(:search).with(Person, "first_name_text: \"Patrick\"", :sort => "created_at_dt asc").and_return [1,2,3] }
+      When(:result) { criteria.order_by(:created_at).ascending }
+      Then { criteria.execute.should == [1,2,3] }
+    end
+
+    context "when trying to confuse the sort direction" do
+      Given { indexer.should_receive(:search).with(Person, "first_name_text: \"Patrick\"", :sort => "created_at_dt desc").and_return [3,2,1] }
+      When(:result) { criteria.order_by(:created_at).ascending.descending }
+      Then { criteria.execute.should == [3,2,1] }
     end
   end
 end
