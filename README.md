@@ -1,7 +1,7 @@
-Ripplr
+Ripplr (Think Ripple/Solr)
 ======
-Ripplr is a library to assist with indexing your Ripple models in Riak. THe library currently is working to support Riak's Solr
-capabilities. Will evolve to support 2i as well.
+Ripplr assists with indexing your Ripple documents stored in Riak. Ripplr currently supports simple full text indexing
+using Riak's Solr capabilities. This will evolve to support 2i as well. 
 
 Dependencies
 ============
