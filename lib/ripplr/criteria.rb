@@ -17,6 +17,12 @@ module Ripplr
       end
     end
 
+    def size
+      results.size
+    end
+    alias :length :size
+    alias :count :size
+
     def execute
       return @target.list if condition.nil?
 

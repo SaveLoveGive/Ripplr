@@ -43,6 +43,18 @@ describe Ripplr::Criteria do
       When { criteria.each {|p| iterated << p } }
       Then { iterated.should == ["Dan"] }
     end
+
+    context "by calling #size" do
+      Then { criteria.size.should == 1 }
+    end
+
+    context "by calling #length" do
+      Then { criteria.length.should == 1 }
+    end
+
+    context "by calling #count" do
+      Then { criteria.count.should == 1 }
+    end
   end
 
 end
