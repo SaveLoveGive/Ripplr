@@ -6,7 +6,7 @@ module Ripplr
       end
 
       def self.search(klass, query, options={})
-        results = ::Ripple.client.search(klass.bucket.name, query)["response"]["docs"]
+        results = ::Ripple.client.search(klass.bucket.name, query, options)["response"]["docs"]
         results.map{|result| klass.find(result["id"])}.reject{|obj| obj.nil?}
       end
     end

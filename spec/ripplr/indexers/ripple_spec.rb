@@ -11,7 +11,7 @@ describe Ripplr::Indexers::Ripple do
   describe "#search" do
     context "when no documents match" do
       Given (:results) { {"response" => {"docs" => []} }  }
-      Given { Ripple.client.should_receive(:search).with('people', 'query string').and_return results }
+      Given { Ripple.client.should_receive(:search).with('people', 'query string', {}).and_return results }
       When(:result) { Ripplr::Indexers::Ripple.search Person, 'query string' }
       Then { result.should be_empty }
     end
@@ -19,7 +19,7 @@ describe Ripplr::Indexers::Ripple do
     context "when one document matches" do
       Given (:results) { {"response" => {"docs" => [ { "id" => "12345"} ]} }  }
       Given { Person.should_receive(:find).with("12345").and_return "yo dawg" }
-      Given { Ripple.client.should_receive(:search).with('people', 'query string').and_return results }
+      Given { Ripple.client.should_receive(:search).with('people', 'query string', {}).and_return results }
       When(:result) { Ripplr::Indexers::Ripple.search Person, 'query string' }
       Then { result.first.should == "yo dawg" }
     end
@@ -27,7 +27,7 @@ describe Ripplr::Indexers::Ripple do
     context "when one document matches but it doesnt exist" do
       Given (:results) { {"response" => {"docs" => [ { "id" => "12345"} ]} }  }
       Given { Person.should_receive(:find).with("12345").and_return nil }
-      Given { Ripple.client.should_receive(:search).with('people', 'query string').and_return results }
+      Given { Ripple.client.should_receive(:search).with('people', 'query string', {}).and_return results }
       When(:result) { Ripplr::Indexers::Ripple.search Person, 'query string' }
       Then { result.should be_empty }
     end
