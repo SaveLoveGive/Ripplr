@@ -18,7 +18,7 @@ describe Ripplr::Queryable do
   describe "#find" do
     context "when using a field that has been defiend as queryable" do
       Given (:indexer) { mock }
-      Given { indexer.should_receive(:search).with(:first_name_text, "Dan").and_return ["Dan Auerbach"] }
+      Given { indexer.should_receive(:search).with("people","first_name_text: \"Dan\"").and_return ["Dan Auerbach"] }
       When (:result) { Person.find :first_name, "Dan", indexer }
       Then { result.should == [ "Dan Auerbach" ] }
     end

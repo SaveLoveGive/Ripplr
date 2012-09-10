@@ -8,4 +8,5 @@ describe Ripplr::Indexers::Ripple do
     Then { Ripplr::Indexers::Ripple.index(model).should be_true }
   end
 
+  
 end
