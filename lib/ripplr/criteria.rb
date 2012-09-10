@@ -11,6 +11,11 @@ module Ripplr
       self
     end
 
+    def order_by(field)
+      @order = { :sort => @target.queryable_field(field).to_s }
+      self
+    end
+
     def each(&block)
       results.each do |result|
         yield result
@@ -30,7 +35,11 @@ module Ripplr
     def execute
       return @target.list if condition.nil?
 
-      @indexer.search @target, query
+      if @order.present?
+        @indexer.search @target, query, @order
+      else
+        @indexer.search @target, query
+      end
     end
 
     def conditions

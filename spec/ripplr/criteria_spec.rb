@@ -61,4 +61,22 @@ describe Ripplr::Criteria do
     end
   end
 
+  describe "adding a sort to a query" do
+    Given (:indexer) { mock }
+    Given (:criteria) { Ripplr::Criteria.new(Person, indexer).where(:first_name => 'Patrick') }
+
+    describe "is reflective" do
+      Then { criteria.order_by(:last_name).should == criteria }
+    end
+
+    context "when sorting by a queryable field" do
+      Given { indexer.should_receive(:search).with(Person, "first_name_text: \"Patrick\"", :sort => "created_at_dt").and_return [1,2,3] }
+      When(:result) { criteria.order_by(:created_at) }
+      Then { criteria.execute.should == [1,2,3] }
+    end
+
+    context "when sorting by a non queryable field" do
+      Then { expect { criteria.order_by(:junk_field) }.to raise_error RuntimeError }
+    end
+  end
 end
