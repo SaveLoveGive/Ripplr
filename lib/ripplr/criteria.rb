@@ -30,7 +30,11 @@ module Ripplr
     def execute
       return @target.list if condition.nil?
 
-      @indexer.search @target, conditions
+      @indexer.search @target, query
+    end
+
+    def conditions
+      condition
     end
 
     private
@@ -47,7 +51,7 @@ module Ripplr
       @condition = { @target.queryable_field(value.keys.first) => value.values.first }
     end
 
-    def conditions
+    def query
       "#{condition.keys.first}: \"#{condition.values.first}\""
     end
 

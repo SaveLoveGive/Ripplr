@@ -20,27 +20,10 @@ describe Ripplr::Queryable do
     Then { Person.count.should == 5 }
   end
 
-  describe "#search" do
-    context "when using a field that has been defiend as queryable" do
-      Given (:indexer) { mock }
-      Given { indexer.should_receive(:search).with(Person,"first_name_text: \"Dan\"").and_return ["Dan Auerbach"] }
-      When (:result) { Person.search :first_name, "Dan", indexer }
-      Then { result.should == [ "Dan Auerbach" ] }
-    end
-
-    context "when using a field that has not been defined as queryable" do
-      Then { expect { Person.search :full_name, "val" }.to raise_error RuntimeError }
-    end
-
-    context "when the object does not have any queryable fields" do
-      Then { expect { Unqueryable.search :something, "what what" }.to raise_error RuntimeError }
-    end
-
-
-    describe "and applying a sort" do
-      #      Given
-      #      When (:result) { Person.search(:first_name, "John").order_by(:created_at, :ascending) }
-    end
+  describe "#where" do
+    When (:criteria) { Person.where(:first_name => "Patrick") }
+    Then { criteria.should be_a(Ripplr::Criteria) }
+    Then { criteria.conditions.should == {:first_name_text => "Patrick"} }
   end
 
   describe "#index" do

@@ -29,8 +29,8 @@ module Ripplr
     end
 
     module QueryableClassMethods
-      def search(property, query, indices=Ripplr::Indexers::Ripple)
-        indices.search self, "#{queryable_field(property)}: \"#{query}\""
+      def where(condition)
+        Ripplr::Criteria.new(self).where condition
       end
 
       def count
