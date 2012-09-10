@@ -1,3 +1,4 @@
 en:
   ripplr:
-    key_not_specified: "Cannot index an object that does not specify a key."
+    errors:
+      field_not_queryable: "\"%{field}\" is not a queryable field."

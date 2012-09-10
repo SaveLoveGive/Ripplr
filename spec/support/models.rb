@@ -1,3 +1,9 @@
-require File.join("support", "models", "person")
-require File.join("support", "models", "lift")
-require File.join("support", "models", "log_entry")
+%w[
+   person
+   lift
+   log_entry
+   unqueryable
+  ].each do |file|
+  require File.join("support", "models", file)  
+end
+

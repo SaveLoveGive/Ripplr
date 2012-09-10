@@ -1,1 +1,1 @@
-  require File.join("ripplr", "errors", "key_not_specified_error")
+  require File.join("ripplr", "errors", "field_not_queryable_error")

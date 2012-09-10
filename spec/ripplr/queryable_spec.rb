@@ -15,6 +15,23 @@ describe Ripplr::Queryable do
     Then { Person.new.bucket_name.should == "people" }
   end
 
+  describe "#find" do
+    context "when using a field that has been defiend as queryable" do
+      Given (:indexer) { mock }
+      Given { indexer.should_receive(:search).with(:first_name_text, "Dan").and_return ["Dan Auerbach"] }
+      When (:result) { Person.find :first_name, "Dan", indexer }
+      Then { result.should == [ "Dan Auerbach" ] }
+    end
+
+    context "when using a field that has not been defined as queryable" do
+      Then { expect { Person.find :full_name, "val" }.to raise_error RuntimeError }
+    end
+
+    context "when the object does not have any queryable fields" do
+      Then { expect { Unqueryable.find :something, "what what" }.to raise_error RuntimeError }
+    end
+  end
+
   describe "#index" do
     context "overide indexer" do
       Given (:friend) { Person.new }
