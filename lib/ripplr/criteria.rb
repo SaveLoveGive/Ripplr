@@ -11,6 +11,12 @@ module Ripplr
       self
     end
 
+    def each(&block)
+      results.each do |result|
+        yield result
+      end
+    end
+
     def execute
       return @target.list if condition.nil?
 
@@ -18,6 +24,11 @@ module Ripplr
     end
 
     private
+    def results
+      @results ||= execute
+      @results
+    end
+
     def condition
       @condition
     end

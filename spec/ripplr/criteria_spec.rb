@@ -27,7 +27,22 @@ describe Ripplr::Criteria do
   end
 
   describe "treating a criteria object like a collection executes the query" do
-    
+    Given (:criteria) {  Ripplr::Criteria.new(Person, indexer).where(:first_name => "Dan") }
+    Given (:indexer) { mock }
+    Given { indexer.should_receive(:search).with(Person,"first_name_text: \"Dan\"").once.and_return(["Dan"]) }
+
+    context "by calling #each" do
+      Given (:iterated) { Array.new }
+      When { criteria.each {|p| iterated << p } }
+      Then { iterated.should == ["Dan"] }
+    end
+
+    context "by calling #each twice only calls execute once" do
+      Given (:iterated) { Array.new }
+      Given { criteria.each {|p| p } }
+      When { criteria.each {|p| iterated << p } }
+      Then { iterated.should == ["Dan"] }
+    end
   end
 
 end
