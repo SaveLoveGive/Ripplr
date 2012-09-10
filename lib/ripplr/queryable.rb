@@ -58,7 +58,6 @@ module Ripplr
         end
       end
 
-      protected
       def queryable_field(property_name)
         matches = query_fields.select{|f| f.for? property_name}
         raise Ripplr::FieldNotQueryableError.new(property_name) if matches.empty?

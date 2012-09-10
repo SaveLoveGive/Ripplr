@@ -35,6 +35,12 @@ describe Ripplr::Queryable do
     context "when the object does not have any queryable fields" do
       Then { expect { Unqueryable.search :something, "what what" }.to raise_error RuntimeError }
     end
+
+
+    describe "and applying a sort" do
+      #      Given
+      #      When (:result) { Person.search(:first_name, "John").order_by(:created_at, :ascending) }
+    end
   end
 
   describe "#index" do
