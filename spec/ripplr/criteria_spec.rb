@@ -55,6 +55,10 @@ describe Ripplr::Criteria do
     context "by calling #count" do
       Then { criteria.count.should == 1 }
     end
+
+    context "by calling to_a" do
+      Then { criteria.to_a.should == ["Dan"] }
+    end
   end
 
 end

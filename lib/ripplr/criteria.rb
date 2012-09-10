@@ -23,6 +23,10 @@ module Ripplr
     alias :length :size
     alias :count :size
 
+    def to_a
+      results
+    end
+
     def execute
       return @target.list if condition.nil?
 
