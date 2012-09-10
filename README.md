@@ -33,6 +33,6 @@ And then create, index and search for your documents like so:
 ```ruby
 todays_wod = Wod.create :description => 'Lawnmower 8x35lbs. Sqt Jumps 10x. Lunge Twist 20x10lbs ...', :performed_at = Time.now 
 todays_wod.index #add the index for your document
-Wod.search("jumps") # Search WODs for jump, returns an array of matching WODs
+Wod.search(:description, "jumps") # Search WODs for descriptions that contain jump, returns an array of matching WODs
 ```
 
