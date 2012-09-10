@@ -29,7 +29,7 @@ module Ripplr
     end
 
     module QueryableClassMethods
-      def find(property, query, indices=Ripplr::Indexers::Ripple)
+      def search(property, query, indices=Ripplr::Indexers::Ripple)
         indices.search self, "#{queryable_field(property)}: \"#{query}\""
       end
 
