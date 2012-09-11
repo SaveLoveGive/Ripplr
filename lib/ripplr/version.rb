@@ -1,3 +1,3 @@
 module Ripplr
-  VERSION = "0.0.9.beta"
+  VERSION = "1.0.0.rc"
 end
