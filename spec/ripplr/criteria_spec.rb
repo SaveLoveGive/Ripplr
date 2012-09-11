@@ -72,6 +72,13 @@ describe Ripplr::Criteria do
     Then { criteria.execute.should == [1,2] }
   end
 
+  describe "skipping some records (for paging)" do
+    Given (:indexer) { mock }
+    Given { indexer.should_receive(:search).with(Person, "first_name_text: \"Patrick\"", :start => 50).and_return [3,2] }
+    When (:criteria) { Ripplr::Criteria.new(Person, indexer).where(:first_name => 'Patrick').skip(50) }
+    Then { criteria.execute.should == [3,2] }
+  end
+
   describe "adding a sort to a query" do
     Given (:indexer) { mock }
     Given (:criteria) { Ripplr::Criteria.new(Person, indexer).where(:first_name => 'Patrick') }

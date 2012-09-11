@@ -21,6 +21,11 @@ module Ripplr
       self
     end
 
+    def skip(number_of_rows)
+      @skip = number_of_rows
+      self
+    end
+
     def ascending
       @order_by_direction = " asc"
       self
@@ -68,18 +73,16 @@ module Ripplr
     end
 
     def options
-      ordering.merge limiting
-    end
-
-    def limiting
-      return Hash.new if @limit.nil?
-      { :rows => @limit }
+      {
+        :start => @skip,
+        :rows => @limit,
+        :sort => ordering
+      }.select{|k,v| v.present? }
     end
 
     def ordering
-      return Hash.new if @order_by_field.nil?
-      sort = { :sort => "#{@order_by_field.to_s}" }
-      sort[:sort] += @order_by_direction unless @order_by_direction.nil?
+      sort = @order_by_field.to_s
+      sort += @order_by_direction unless @order_by_direction.nil?
       sort
     end
 
