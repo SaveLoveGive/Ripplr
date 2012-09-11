@@ -16,6 +16,11 @@ module Ripplr
       self
     end
 
+    def limit(number_of_records)
+      @limit = number_of_records
+      self
+    end
+
     def ascending
       @order_by_direction = " asc"
       self
@@ -63,11 +68,16 @@ module Ripplr
     end
 
     def options
-      Maybe(ordering) { Hash.new }
+      ordering.merge limiting
+    end
+
+    def limiting
+      return Hash.new if @limit.nil?
+      { :rows => @limit }
     end
 
     def ordering
-      return NullObject.new if @order_by_field.nil?
+      return Hash.new if @order_by_field.nil?
       sort = { :sort => "#{@order_by_field.to_s}" }
       sort[:sort] += @order_by_direction unless @order_by_direction.nil?
       sort

@@ -65,6 +65,13 @@ describe Ripplr::Criteria do
     end
   end
 
+  describe "limiting the number of records" do
+    Given (:indexer) { mock }
+    Given { indexer.should_receive(:search).with(Person, "first_name_text: \"Patrick\"", :rows => 20).and_return [1,2] }
+    When (:criteria) { Ripplr::Criteria.new(Person, indexer).where(:first_name => 'Patrick').limit(20) }
+    Then { criteria.execute.should == [1,2] }
+  end
+
   describe "adding a sort to a query" do
     Given (:indexer) { mock }
     Given (:criteria) { Ripplr::Criteria.new(Person, indexer).where(:first_name => 'Patrick') }
