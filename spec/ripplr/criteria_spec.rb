@@ -37,6 +37,10 @@ describe Ripplr::Criteria do
       Then { iterated.should == ["Dan"] }
     end
 
+    context "by calling []" do
+      Then { criteria[0].should == "Dan" }
+    end
+
     context "by calling #each twice only calls execute once" do
       Given (:iterated) { Array.new }
       Given { criteria.each {|p| p } }

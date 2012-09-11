@@ -26,6 +26,10 @@ module Ripplr
       self
     end
 
+    def [](index)
+      results[index]
+    end
+
     def each(&block)
       results.each do |result|
         yield result
