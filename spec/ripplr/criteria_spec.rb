@@ -3,9 +3,8 @@ require 'spec_helper'
 describe Ripplr::Criteria do
 
   describe "searching without a query" do
-    Given { Person.stub(:list).and_return [1,2,3,4,5] }
     When(:results) { Ripplr::Criteria.new(Person).execute }
-    Then { results.should == [1,2,3,4,5] }
+    Then { results.should be_empty }
   end
 
   describe "searching with a query against a field" do

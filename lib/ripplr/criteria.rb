@@ -57,7 +57,7 @@ module Ripplr
     end
 
     def execute
-      return @target.list if condition.nil?
+      return Array.new if condition.nil?
 
       @indexer.search @target, query, options
     end
