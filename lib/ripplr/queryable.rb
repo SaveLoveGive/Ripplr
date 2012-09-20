@@ -5,6 +5,7 @@ module Ripplr
     end
 
     def remove_index(indexer=Ripple.client)
+      raise RuntimeError.new "Sorry, not implemented yet"
     end
 
     def bucket_name
