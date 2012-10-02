@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ripplr (0.0.2.beta)
+    ripplr (1.0.0.rc)
       ripple (>= 0.9.5)
 
 GEM

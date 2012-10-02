@@ -43,6 +43,10 @@ module Ripplr
         @query_fields
       end
 
+      def queryable?(name)
+        query_fields.select{|field| field.for? name}.count > 0
+      end
+
       def queryable(&block)
         block.call
       end

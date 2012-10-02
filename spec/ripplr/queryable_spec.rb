@@ -20,6 +20,11 @@ describe Ripplr::Queryable do
     Then { Person.count.should == 5 }
   end
 
+  describe "#queryable?" do
+    Then { Person.queryable?(:first_name).should be_true }
+    Then { Person.queryable?(:middle_name).should be_false }
+  end
+  
   describe "#where" do
     When (:criteria) { Person.where(:first_name => "Patrick") }
     Then { criteria.should be_a(Ripplr::Criteria) }
