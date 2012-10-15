@@ -37,3 +37,14 @@ criteria = Wod.where(:description => "jumps") # Builds a criteria object
 # Iterating over a criteria object, calling count(size, or length), or calling to_a executes the search
 ```
 
+You can also limit, skip and order your search results, allowing you to paginate!
+```ruby
+Wod.where(:description => "plyo").limit(10) # returns up to 10 matching results
+Wod.where(:description => "plyo").skip(5) # skips the first 5 results
+Wod.where(:description => "plyo").order_by(:created_at).descending # orders by created_at (Field must be defined as queryable!
+
+# Chain it all together!
+Wod.where(:description => 'kick ass').limit(10).skip(10).order_by(:created_at)
+```
+
+Find more details about specifying query params in the specs: https://github.com/validas/Ripplr/blob/master/spec/ripplr/criteria_spec.rb
